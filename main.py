@@ -1,8 +1,10 @@
 from discord.ext import commands
+import discord
 import os
 from collections import defaultdict
 from pycoingecko import CoinGeckoAPI
 from keep_alive import keep_alive
+from replit import db
 
 bot = commands.Bot(command_prefix='$')
 cg = CoinGeckoAPI()
@@ -20,7 +22,9 @@ def build_coins_dict(coins_list):
     "eth" : "ethereum",
     "yfi" : "yearn-finance",
     "xrp" : "ripple",
-    "aave" : "aave"
+    "aave" : "aave",
+    "uni" : "uniswap",
+    "mir" : "mirror-protocol"
   }
 
   # Fill in everything else. If it's already there, skip it.
@@ -83,6 +87,35 @@ async def top(ctx):
   reply += "```"
   print(reply)
   await ctx.message.reply(reply)
+
+HALL_OF_FAME_THRESH = 10
+HALL_OF_FAME_CHAN_NAME = "hall-of-fame"
+
+# This could break if we try to run this on multiple discord servers at the same time,
+# because message IDs might collide.
+def update_hof_db(msg_id):
+  if "hof" in db.keys():
+    hof = db["hof"].append(msg_id)
+    db["hof"] = hof
+  else:
+    db["hof"] = [msg_id]
+
+def already_hof(msg_id):
+  if "hof" in db.keys():
+    return msg_id in db["hof"]
+  else:
+    return False
+
+@bot.event
+async def on_reaction_add(reaction, user):
+  msg = reaction.message
+  if len(msg.reactions) >= HALL_OF_FAME_THRESH:
+    if not already_hof(msg.id):
+      update_hof_db(msg.id)
+      ctx = await bot.get_context(msg)
+      channel = discord.utils.get(ctx.guild.channels, name=HALL_OF_FAME_CHAN_NAME)
+      credit = "hall-of-fame message by %s in channel %s" % (msg.author.mention, msg.channel.mention)
+      await channel.send(credit + ": " + msg.jump_url)
 
 keep_alive()
 

@@ -159,6 +159,20 @@ requests = "*"
 
 [[package]]
 category = "main"
+description = "A library for interacting with features of repl.it"
+name = "replit"
+optional = false
+python-versions = ">=3.8,<4.0"
+version = "2.0.0"
+
+[package.dependencies]
+aiohttp = ">=3.6.2,<4.0.0"
+flask = ">=1.1.2,<2.0.0"
+typing_extensions = ">=3.7.4,<4.0.0"
+werkzeug = ">=1.0.1,<2.0.0"
+
+[[package]]
+category = "main"
 description = "Python HTTP for Humans."
 name = "requests"
 optional = false
@@ -202,7 +216,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "b447c10265a904ad2ee402052f53ed1ef19effde4d913e7cfcfa17318fdee567"
+content-hash = "e9380636d3e53bf259cc155636a8d14aee6d85ffc556310c6653d391026d6919"
 python-versions = "^3.8"
 
 [metadata.files]
@@ -362,6 +376,10 @@ multidict = [
 pycoingecko = [
     {file = "pycoingecko-1.4.0-py3-none-any.whl", hash = "sha256:bc6e2d87a59bda88bd01a241b37d49c30104842534fdf65ba96616c90419d756"},
     {file = "pycoingecko-1.4.0.tar.gz", hash = "sha256:082949e83b49ab89090d19b88b6177c9458679dc4a98323db950bd4cef7afa2e"},
+]
+replit = [
+    {file = "replit-2.0.0-py3-none-any.whl", hash = "sha256:862b49887f486a5c83eba4809b86a977378a008f1c5d53ab3c1187418194cf18"},
+    {file = "replit-2.0.0.tar.gz", hash = "sha256:f6953201a5ff5b3ae29b7630fa13a87f2423f5a9afba06fc5427ee0f958c7aa7"},
 ]
 requests = [
     {file = "requests-2.15.1-py2.py3-none-any.whl", hash = "sha256:ff753b2196cd18b1bbeddc9dcd5c864056599f7a7d9a4fb5677e723efa2b7fb9"},
