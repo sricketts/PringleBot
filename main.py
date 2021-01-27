@@ -18,7 +18,7 @@ async def on_ready():
 async def price(ctx, sym):
   price = coinPrices.get_price(sym)
   if price is not None:
-    reply = '{0} price is ${1}'.format(sym, price)
+    reply = '{0} price is ${1}'.format(sym.upper(), price)
   else:
     reply = "I don't know %s" % sym
   await ctx.message.reply(reply)
@@ -30,7 +30,7 @@ async def ratio(ctx, sym1, sym2):
   if price1 is not None:
     if price2 is not None:
       ratio = price1 / price2
-      reply = '1 {0} is {1} {2}'.format(sym1, ratio, sym2)
+      reply = '1 {0} = {1:.3g} {2}'.format(sym1.upper(), ratio, sym2.upper())
     else:
       reply = "I don't know %s" % sym2
   else:
